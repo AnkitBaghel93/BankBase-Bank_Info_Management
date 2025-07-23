@@ -12,8 +12,18 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 
+const allowedOrigins = ['https://bankbase-frontend.onrender.com'];
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // allow requests with no origin like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
