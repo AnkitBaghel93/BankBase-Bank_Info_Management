@@ -22,7 +22,7 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const sortedData = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setUsers(sortedData.map((acc) => acc.user));
+      setUsers(sortedData.map((acc) => acc.user).filter((u) => u !== null));
       setBankAccounts(sortedData);
     } catch (err) {
       alert('Error loading dashboard data.');
@@ -70,7 +70,7 @@ const Dashboard = () => {
       case 'accountHolderName':
         return account.accountHolderName || '';
       default:
-        return `${account.user?.username} ${account.bankName} ${account.ifscCode} ${account.accountNumber} ${account.accountHolderName}` || '';
+        return `${account.user?.username || ''} ${account.bankName || ''} ${account.ifscCode || ''} ${account.accountNumber || ''} ${account.accountHolderName || ''}`;
     }
   };
 
@@ -85,7 +85,7 @@ const Dashboard = () => {
       <div className="stats-row">
         <div className="stat-box">
           <h4>Total Users</h4>
-          <p>{new Set(users.map((u) => u._id)).size}</p>
+          <p>{new Set(users.filter((u) => u && u._id).map((u) => u._id)).size}</p>
         </div>
         <div className="stat-box">
           <h4>Total Bank Accounts</h4>
@@ -134,7 +134,7 @@ const Dashboard = () => {
           <tbody>
             {filteredAccounts.map((acc) => (
               <tr key={acc._id}>
-                <td>{acc.user?.username}</td>
+                <td>{acc.user?.username || 'N/A'}</td>
                 {editingId === acc._id ? (
                   <>
                     <td><input type="text" name="bankName" value={editedData.bankName} onChange={handleChange} /></td>
