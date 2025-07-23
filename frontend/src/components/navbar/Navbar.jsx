@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
@@ -9,6 +9,13 @@ const Navbar = () => {
 
   const isLoggedIn = !!auth.token;
   const isAdmin = auth?.user?.role === 'admin';
+
+  const [showLogout, setShowLogout] = useState(false);
+
+  // Toggle logout dropdown
+  const toggleLogout = () => {
+    setShowLogout(!showLogout);
+  };
 
   // Function to close the mobile menu
   const closeMenu = () => {
@@ -23,7 +30,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    closeMenu(); 
+    closeMenu();
+    setShowLogout(false);
     navigate('/');
   };
 
@@ -46,6 +54,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-lg-auto text-center nav-links-wrapper">
 
+            {/* Public Links */}
             {!isLoggedIn && (
               <>
                 <li className="nav-item">
@@ -69,6 +78,7 @@ const Navbar = () => {
               </>
             )}
 
+            {/* Admin Links */}
             {isLoggedIn && isAdmin && (
               <>
                 <li className="nav-item">
@@ -77,14 +87,10 @@ const Navbar = () => {
                     Dashboard
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <button className="btn btn-link nav-link text-white" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </li>
               </>
             )}
 
+            {/* User Links */}
             {isLoggedIn && !isAdmin && (
               <>
                 <li className="nav-item">
@@ -105,13 +111,32 @@ const Navbar = () => {
                     View Details
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <button className="btn btn-link nav-link text-white" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </li>
               </>
             )}
+
+            {/* Role Dropdown & Logout */}
+{isLoggedIn && (
+  <li className="nav-item dropdown position-relative">
+    <button
+      className="btn btn-outline-light rounded-pill fw-semibold px-3 py-1"
+      onClick={toggleLogout}
+      type="button"
+      id="roleDropdown"
+    >
+      {auth?.user?.role}
+    </button>
+    {showLogout && (
+      <ul className="dropdown-menu show position-absolute mt-2 end-0 shadow-sm rounded" aria-labelledby="roleDropdown">
+        <li>
+          <button className="dropdown-item text-danger fw-medium" onClick={handleLogout}>
+            Logout
+          </button>
+        </li>
+      </ul>
+    )}
+  </li>
+)}
+
           </ul>
         </div>
       </div>
