@@ -1,0 +1,37 @@
+.bank-card {
+  background-color: #ffffff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 1rem;
+  border: none;
+  padding: 1.2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.bank-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+.bank-card input {
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+}
+
+.bank-card button {
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #007bff, #6610f2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .bank-card {
+    margin: 0 auto;
+  }
+}

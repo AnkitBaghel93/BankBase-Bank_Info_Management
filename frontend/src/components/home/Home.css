@@ -1,0 +1,14 @@
+.hero-section {
+  height: 100vh;
+  background: linear-gradient(to right, #1d3557, #2a2a40);
+  padding: 2rem;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.about-section ul li {
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,6 @@
+.add-details-container {
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
